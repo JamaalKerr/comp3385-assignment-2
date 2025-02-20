@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,8 @@ Route::get('/about', function () {
 });
 
 // Create additional Routes below
+// Route to display the feedback form
+Route::get('/feedback', [FeedbackController::class, 'create']);
+
+// Route to handle form submission
+Route::post('/feedback/send', [FeedbackController::class, 'send']);
