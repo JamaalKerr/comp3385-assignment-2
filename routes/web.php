@@ -28,3 +28,7 @@ Route::get('/feedback', [FeedbackController::class, 'create']);
 
 // Route to handle form submission
 Route::post('/feedback/send', [FeedbackController::class, 'send']);
+
+// Route to display success message
+Route::get('/feedback/success', [FeedbackController::class, 'success']);
+

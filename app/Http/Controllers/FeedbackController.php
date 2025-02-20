@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Feedback;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FeedbackController extends Controller
 {
@@ -15,16 +17,23 @@ class FeedbackController extends Controller
     // Method to handle form submission
     public function send(Request $request)
     {
-        // Handle form submission logic here
-        // For example, validate and process the form data
+        // Validate form input
         $validated = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email',
             'feedback' => 'required'
         ]);
 
-        // You can save the data to the database or send an email
+        // Send email
+        Mail::to('comp3385@uwi.edu')->send(new Feedback($validated['name'], $validated['email'], $validated['feedback']));
 
-        return redirect('/feedback')->with('success', 'Feedback submitted successfully!');
+        // Redirect back with success message
+        return redirect('/feedback/success')->with('success', 'Feedback submitted successfully!');
+    }
+
+    // Method to display the success message
+    public function success()
+    {
+        return view('feedback-success');
     }
 }
